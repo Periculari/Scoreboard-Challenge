@@ -29,4 +29,11 @@ public class ScoreRepo {
 		
 		return scoreList;
 	}
+	
+	public boolean addScoretoDataVase(ScoreClass newScore) {
+		//usually this method would add one entry to the Database (if there was one)
+		
+		//return true if adding of entry was successfull
+		return true;
+	}
 }

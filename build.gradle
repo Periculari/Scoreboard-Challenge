@@ -23,8 +23,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	compile 'org.springframework.boot:spring-boot-starter-web'
 	compile group: 'org.springframework', name: 'spring-web', version: '5.2.4.RELEASE'
-	compile group: 'org.webjars', name: 'datatables', version: '1.10.20'
-	compile group: 'org.webjars.bower', name: 'fontawesome', version: '4.7.0'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

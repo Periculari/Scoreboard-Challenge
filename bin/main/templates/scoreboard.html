@@ -4,9 +4,6 @@
 	    <title>Getting Started: Serving Web Content</title>
 	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		
-    	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/dataTables.jqueryui.min.css"/>
 
 
 		<script type="text/javascript" charset="utf8" src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js'></script>
@@ -14,7 +11,15 @@
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/dataTables.jqueryui.min.js"></script>
 		
-	
+    	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/dataTables.jqueryui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+		<!-- 
+		<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables.css">
+  		<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+   		<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
+   		<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
+	 	-->
 	</head>
 	<body>
 	    <h1 id="title1">Scoreboard</h1>
@@ -37,7 +42,7 @@
 	    			<td>
 	    				<input type="text" id="nameInput"></input>
 	    				<br>
-						<button th:text="Save"></button>
+						<button th:text="Save" onclick="addScore();"></button>
 	    			</td>
 	    			<td>
 	    				<input style="margin-bottom: 30px;" type="text" id="scoreInput"></input>
@@ -47,8 +52,38 @@
 	    </table>
 	</body>
 	<script type="text/javascript">
+		var table;
+	
 		$(document).ready(function(){
-			$('table').dataTable();
+			table = $('#table').DataTable();
 		});
+		
+		function addScore() {
+			var name = "";
+			name = $('#nameInput').val();
+			var score = 0;
+			score = $('#scoreInput').val();
+			var url = "/scoreboard/addScore";
+			var data = { "name": name, "score": score}
+			
+			$.ajax({
+				url: url,
+				method: "POST",
+				contentType: "application/json",
+				data: JSON.stringify(data),
+				dataType: 'json',
+				success: function(data) {
+					drawRow(name, score);
+				}
+			});
+		}
+		
+		function drawRow(name, score) {
+			table.row.add([
+	            name,
+	            score,
+	        ]).draw(false);
+		}
+		
 	</script>
 </html>
